@@ -7,16 +7,15 @@
 
 #pragma once
 
-#include "frc/TimedRobot.h"
-#include "frc/livewindow/LiveWindow.h"
-#include "frc/smartdashboard/SendableChooser.h"
+// FRC includes
+#include <frc/Joystick.h>
+#include <frc/TimedRobot.h>
 
+// Cavalier's includes
 #include "Subsystems/Drive.h"
 
 class Robot : public frc::TimedRobot {
  public:
-   frc::LiveWindow *lw = frc::LiveWindow::GetInstance();
-   Drive drive;
    void RobotInit() override;
 
    void AutonomousInit() override;
@@ -24,4 +23,10 @@ class Robot : public frc::TimedRobot {
 
    void TeleopInit() override;
    void TeleopPeriodic() override;
+
+ private:
+   static constexpr int kJoystickPort = 0;
+
+   frc::Joystick m_joystick{kJoystickPort};
+   Drive m_drive;
 };

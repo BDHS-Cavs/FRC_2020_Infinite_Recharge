@@ -8,10 +8,6 @@
 #include "Subsystems/Drive.h"
 
 
-Drive::Drive() : frc::Subsystem("Drive") {
-    // Does anything need to be set here?
-}
-
 void Drive::InitDefaultCommand() {
     // Set the default command for a subsystem here.
     // SetDefaultCommand(new MySpecialCommand());
@@ -20,7 +16,4 @@ void Drive::InitDefaultCommand() {
 void Drive::Periodic() {
     // Put code here to be run every loop
 }
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
 

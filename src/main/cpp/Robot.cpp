@@ -7,7 +7,6 @@
 
 #include "Robot.h"
 
-#include <frc/Commands/Scheduler.h>
 void Robot::RobotInit() {
 	// Something needs to happen here to create a "drive object"
 	//Drive *drive;
@@ -20,9 +19,8 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 
-void Robot::TeleopPeriodic() {
-	frc::Scheduler::GetInstance()->Run();
-}
+void Robot::TeleopPeriodic() {}
+
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }

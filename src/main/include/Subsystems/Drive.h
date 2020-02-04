@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include "frc/commands/Subsystem.h"
-#include "frc/drive/MecanumDrive.h"
-#include "frc/PWMVictorSPX.h"
+// FRC includes
+#include <frc/drive/MecanumDrive.h>
+#include <frc/PWMVictorSPX.h>
 
-class Drive: public frc::Subsystem {
+class Drive {
 private:
   static constexpr int kFrontLeftChannel  = 0;
   static constexpr int kRearLeftChannel   = 1;
@@ -26,7 +26,6 @@ private:
                                  m_rightRear};
 public:
 
-Drive();
-	void InitDefaultCommand() override;
-	void Periodic() override;
+	void InitDefaultCommand();
+	void Periodic();
 };
