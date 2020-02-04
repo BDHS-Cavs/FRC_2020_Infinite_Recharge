@@ -8,19 +8,19 @@
 #include "Robot.h"
 
 void Robot::RobotInit() {
-	// Something needs to happen here to create a "drive object"
-	//Drive *drive;
-	//drive = new Drive();
+   m_joystick.SetTwistChannel(kTwistAxis);
 }
 
 void Robot::AutonomousInit() {}
 
 void Robot::AutonomousPeriodic() {}
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+}
 
-void Robot::TeleopPeriodic() {}
-
+void Robot::TeleopPeriodic() {
+	m_drive.Periodic(m_joystick.GetY(), m_joystick.GetX(), m_joystick.GetTwist());
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }

@@ -11,7 +11,7 @@
 #include <frc/Joystick.h>
 #include <frc/TimedRobot.h>
 
-// Cavalier's includes
+// Cavalier includes
 #include "Subsystems/Drive.h"
 
 class Robot : public frc::TimedRobot {
@@ -26,6 +26,9 @@ class Robot : public frc::TimedRobot {
 
  private:
    static constexpr int kJoystickPort = 0;
+
+   // Twist is on Axis 3 for the Extreme 3D Pro
+   static constexpr int kTwistAxis    = 3;
 
    frc::Joystick m_joystick{kJoystickPort};
    Drive m_drive;
