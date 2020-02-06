@@ -28,7 +28,8 @@ class Robot : public frc::TimedRobot {
    static constexpr int kJoystickPort = 0;
 
    // Twist is on Axis 3 for the Extreme 3D Pro
-   static constexpr int kTwistAxis    = 3;
+   // Count starts at 0, so we use #2
+   static constexpr int kTwistAxis = 2;
 
    frc::Joystick m_joystick{kJoystickPort};
    Drive m_drive;
