@@ -9,7 +9,7 @@
 
 // FRC includes
 #include <frc/drive/MecanumDrive.h>
-#include <frc/PWMVictorSPX.h>
+#include <frc/Spark.h>
 
 class Drive {
 private:
@@ -18,10 +18,10 @@ private:
   static constexpr int kFrontRightChannel = 3;
   static constexpr int kRearRightChannel  = 1;
 
-  frc::PWMVictorSPX m_leftFront{kFrontLeftChannel};
-  frc::PWMVictorSPX m_leftRear{kRearLeftChannel};
-  frc::PWMVictorSPX m_rightFront{kFrontRightChannel};
-  frc::PWMVictorSPX m_rightRear{kRearRightChannel};
+  frc::Spark m_leftFront{kFrontLeftChannel};
+  frc::Spark m_leftRear{kRearLeftChannel};
+  frc::Spark m_rightFront{kFrontRightChannel};
+  frc::Spark m_rightRear{kRearRightChannel};
   frc::MecanumDrive m_robotDrive{m_leftFront, m_leftRear, m_rightFront,
                                  m_rightRear};
 public:
