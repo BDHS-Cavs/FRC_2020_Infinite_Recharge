@@ -13,10 +13,10 @@
 
 class Drive {
 private:
-  static constexpr int kFrontLeftChannel  = 0;
-  static constexpr int kRearLeftChannel   = 1;
-  static constexpr int kFrontRightChannel = 2;
-  static constexpr int kRearRightChannel  = 3;
+  static constexpr int kFrontLeftChannel  = 2;
+  static constexpr int kRearLeftChannel   = 0;
+  static constexpr int kFrontRightChannel = 3;
+  static constexpr int kRearRightChannel  = 1;
 
   frc::PWMVictorSPX m_leftFront{kFrontLeftChannel};
   frc::PWMVictorSPX m_leftRear{kRearLeftChannel};
