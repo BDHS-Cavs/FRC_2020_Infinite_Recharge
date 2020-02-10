@@ -9,6 +9,7 @@
 
 void Robot::RobotInit() {
    m_joystick.SetTwistChannel(kTwistAxis);
+   m_gyro.Calibrate();
 }
 
 void Robot::AutonomousInit() {}
@@ -19,7 +20,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-	m_drive.Periodic(m_joystick.GetY(), m_joystick.GetX(), m_joystick.GetTwist());
+	m_drive.Periodic(m_joystick.GetY(), m_joystick.GetX(), m_joystick.GetTwist(), m_gyro.GetAngle());
 }
 
 #ifndef RUNNING_FRC_TESTS
