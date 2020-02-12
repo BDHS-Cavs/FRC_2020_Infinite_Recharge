@@ -27,5 +27,5 @@ private:
 public:
 
 	void InitDefaultCommand();
-	void Periodic(double ySpeed, double xSpeed, double zRotation);
+	void Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle);
 };

@@ -8,6 +8,7 @@
 #pragma once
 
 // FRC includes
+#include <frc/ADXRS450_Gyro.h>
 #include <frc/Joystick.h>
 #include <frc/TimedRobot.h>
 
@@ -32,5 +33,6 @@ class Robot : public frc::TimedRobot {
    static constexpr int kTwistAxis = 2;
 
    frc::Joystick m_joystick{kJoystickPort};
+   frc::ADXRS450_Gyro m_gyro;
    Drive m_drive;
 };

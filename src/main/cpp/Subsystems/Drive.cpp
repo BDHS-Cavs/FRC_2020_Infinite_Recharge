@@ -13,8 +13,7 @@ void Drive::InitDefaultCommand() {
     // SetDefaultCommand(new MySpecialCommand());
 }
 
-void Drive::Periodic(double ySpeed, double xSpeed, double zRotation) {
-    // note: double gyroAngle = 0.0 as library default
-    m_robotDrive.DriveCartesian(ySpeed, xSpeed, zRotation);
+void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle) {
+    m_robotDrive.DriveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
 }
 
