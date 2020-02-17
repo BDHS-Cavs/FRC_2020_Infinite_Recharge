@@ -16,6 +16,7 @@
 #include "Subsystems/Drive.h"
 #include "Subsystems/Elevator.h"
 #include "Subsystems/Intake.h"
+#include "Subsystems/Shooter.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -39,4 +40,5 @@ class Robot : public frc::TimedRobot {
    Drive m_drive;
    Elevator m_elevator;
    Intake m_intake;
+   Shooter m_shooter;
 };
