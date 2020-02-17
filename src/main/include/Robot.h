@@ -14,6 +14,8 @@
 
 // Cavalier includes
 #include "Subsystems/Drive.h"
+#include "Subsystems/Elevator.h"
+#include "Subsystems/Intake.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -35,4 +37,6 @@ class Robot : public frc::TimedRobot {
    frc::Joystick m_joystick{kJoystickPort};
    frc::ADXRS450_Gyro m_gyro;
    Drive m_drive;
+   Elevator m_elevator;
+   Intake m_intake;
 };

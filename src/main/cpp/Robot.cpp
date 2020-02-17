@@ -21,6 +21,8 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
 	m_drive.Periodic(m_joystick.GetY(), m_joystick.GetX(), m_joystick.GetTwist(), m_gyro.GetAngle());
+   m_elevator.Periodic(m_joystick.GetRawButton(2));
+   m_intake.Periodic(m_joystick.GetRawButton(2));
 }
 
 #ifndef RUNNING_FRC_TESTS
