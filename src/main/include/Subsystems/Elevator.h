@@ -11,12 +11,16 @@
 #include <frc/Spark.h>
 
 class Elevator {
+
 private:
+  // Constants
   static constexpr int kLiftMech = 6;
- 
+
+  // Members
   frc::Spark m_liftMotor{kLiftMech};
 public:
 
-	void InitDefaultCommand();
+  //Functions
+  void InitDefaultCommand();
 	void Periodic(double rawButton);
 };

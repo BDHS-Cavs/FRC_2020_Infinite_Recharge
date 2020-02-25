@@ -11,11 +11,16 @@
 #include <frc/PWMSparkMax.h>
 
 class Shooter {
+
 private:
-  static constexpr int klauncher = 9;
- 
-  frc::PWMSparkMax m_outputMotor{klauncher};
+  // Constants
+  static constexpr int kLauncher = 9;
+
+  // Members
+  frc::PWMSparkMax m_shooter{kLauncher};
+
  public:
-	void InitDefaultCommand();
-	void Periodic(double rawButton);
+   //Functions
+   void InitDefaultCommand();
+   void Periodic(double speedInput);
 };

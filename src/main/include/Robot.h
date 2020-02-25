@@ -13,32 +13,38 @@
 #include <frc/TimedRobot.h>
 
 // Cavalier includes
+#include "Subsystems/ColorSensor.h"
 #include "Subsystems/Drive.h"
 #include "Subsystems/Elevator.h"
 #include "Subsystems/Intake.h"
 #include "Subsystems/Shooter.h"
 
 class Robot : public frc::TimedRobot {
- public:
-   void RobotInit() override;
 
+ public:
+   // Functions
+   void RobotInit() override;
    void AutonomousInit() override;
    void AutonomousPeriodic() override;
-
    void TeleopInit() override;
    void TeleopPeriodic() override;
 
  private:
-   static constexpr int kJoystickPort = 0;
+   // Constants
+   static constexpr int kJoystickPort1 = 0;
+   static constexpr int kJoystickPort2 = 1;
 
    // Twist is on Axis 3 for the Extreme 3D Pro
    // Count starts at 0, so we use #2
    static constexpr int kTwistAxis = 2;
 
-   frc::Joystick m_joystick{kJoystickPort};
+   // Members
+   frc::Joystick m_joystick1{kJoystickPort1};
+   frc::Joystick m_joystick2{kJoystickPort2};
    frc::ADXRS450_Gyro m_gyro;
    Drive m_drive;
    Elevator m_elevator;
    Intake m_intake;
    Shooter m_shooter;
+   ColorSensor m_colorSensor;
 };

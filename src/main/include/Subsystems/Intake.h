@@ -11,12 +11,16 @@
 #include <frc/Spark.h>
 
 class Intake {
-private:
-  static constexpr int kBeaterBar = 7;
- 
-  frc::Spark m_intakeMotor{kBeaterBar};
-public:
 
-	void InitDefaultCommand();
+private:
+  // Constants
+  static constexpr int kBeaterBar = 7;
+
+  // Members
+  frc::Spark m_intakeMotor{kBeaterBar};
+
+public:
+  // Functions
+  void InitDefaultCommand();
 	void Periodic(double rawButton);
 };
