@@ -15,8 +15,15 @@ void Intake::InitDefaultCommand() {
 }
 
 //  Passes joysick values to the intake spark
-void Intake::Periodic(double rawButton) {
-    m_intakeMotor.SetSpeed(rawButton);
+void Intake::Periodic(bool rawButton0, bool rawButton2) {
+    if (rawButton0)
+    {
+        m_intakeMotor.SetSpeed(0.75);
+    }
+    else
+    {
+        m_intakeMotor.SetSpeed(-0.75);
+    };
 }
 
 

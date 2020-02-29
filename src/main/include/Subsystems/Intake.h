@@ -20,7 +20,8 @@ private:
   frc::Spark m_intakeMotor{kBeaterBar};
 
 public:
+
   // Functions
   void InitDefaultCommand();
-	void Periodic(double rawButton);
+	void Periodic(bool rawButton0, bool rawButton2);
 };

@@ -15,6 +15,13 @@ void Shooter::InitDefaultCommand() {
 }
 
 //  Passes set speed to shooter Spark Max
-void Shooter::Periodic(double speedInput) {
-    m_shooter.Set(speedInput);
+void Shooter::Periodic(bool rawButtonShoot) {
+   if (rawButtonShoot)
+   {
+       m_shooter.Set(0.75);
+   }
+   else
+   {
+       m_shooter.Set(0.0);
+   }
 }

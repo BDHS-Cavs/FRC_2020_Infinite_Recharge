@@ -20,21 +20,13 @@ void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-	m_drive.Periodic(m_joystick1.GetY(), m_joystick1.GetX(), m_joystick1.GetTwist(), m_gyro.GetAngle());
-   // TODO: Need to write ability to move elevator and intake both in and out
-   m_elevator.Periodic(m_joystick2.GetRawButton(3));
-   m_intake.Periodic(m_joystick2.GetRawButton(0));
+   // Joystick 1 = Drive, Joystick 2 = Non-Drive Controls
    m_colorSensor.Periodic();
-
-   // Shooter control from joystick 2
-   if (m_joystick2.GetRawButton(5))
-   {
-      m_shooter.Periodic(0.75);
-   }
-   else
-   {
-      m_shooter.Periodic(0.0);
-   }
+	m_drive.Periodic(m_joystick1.GetY(), m_joystick1.GetX(), m_joystick1.GetTwist(), m_gyro.GetAngle());
+   m_elevator.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(2));
+   m_intake.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(2));
+   m_spinner.Periodic(m_joystick2.GetRawButton(7), m_joystick2.GetRawButton(8));
+   m_shooter.Periodic(m_joystick2.GetRawButton(5));
 }
 
 #ifndef RUNNING_FRC_TESTS

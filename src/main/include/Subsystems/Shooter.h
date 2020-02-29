@@ -22,5 +22,5 @@ private:
  public:
    //Functions
    void InitDefaultCommand();
-   void Periodic(double speedInput);
+   void Periodic(bool rawButtonShoot);
 };

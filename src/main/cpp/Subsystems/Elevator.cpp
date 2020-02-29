@@ -15,7 +15,14 @@ void Elevator::InitDefaultCommand() {
 }
 
 //  Passes joysick values to the elevator spark
-void Elevator::Periodic(double rawButton) {
-    m_liftMotor.SetSpeed(rawButton);
+void Elevator::Periodic(bool rawButton0, bool rawbutton2) {
+    if (rawButton0)
+    {
+        m_liftMotor.SetSpeed(0.75);
+    }
+    else
+    {
+        m_liftMotor.SetSpeed(-0.75);
+    };
 }
 

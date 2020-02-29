@@ -10,18 +10,20 @@
 // FRC includes
 #include <frc/Spark.h>
 
-class Elevator {
+class Spinner {
 
 private:
   // Constants
-  static constexpr int kLiftMech = 6;
+  static constexpr int kspinnerArmPort   = 5;
+  static constexpr int kspinnerWheelPort = 8;
 
   // Members
-  frc::Spark m_liftMotor{kLiftMech};
+  frc::Spark m_spinnerArm{kspinnerArmPort};
+  frc::Spark m_spinnerWheel{kspinnerWheelPort};
 
 public:
 
-  //Functions
+  // Functions
   void InitDefaultCommand();
-	void Periodic(bool rawButton0, bool rawButton2);
+	void Periodic(bool rawButtonArm, bool rawButtonInverted);
 };
