@@ -29,4 +29,6 @@ public:
 
   // Functions
 	void Periodic(bool rawButtonArm, bool rawButtonInverted);
+	void ProcessArm(bool rawButtonArm, bool rawButtonInverted);
+	void ProcessSensor();
 };
