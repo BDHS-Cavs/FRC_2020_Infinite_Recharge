@@ -75,3 +75,98 @@ void ColorWheel::ProcessSensor() {
     // Display proximity
     frc::SmartDashboard::PutNumber("Proximity", proximity);
 }
+
+std::string ColorWheel::ColorName(frc::Color matchedColor) const
+{
+    if (matchedColor == kBlueTarget)
+        return "Blue";
+    if (matchedColor == kGreenTarget)
+        return "Green";
+    if (matchedColor == kRedTarget)
+        return "Red";
+    if (matchedColor == kYellowTarget)
+        return "Yellow";
+    if (matchedColor == kBlack)
+        return "Black";
+
+    return "Unknown";
+}
+
+frc::Color ColorWheel::GetColorFromName(std::string colorName) const
+{
+    if(colorName.length() > 0)
+    {
+        switch (toupper(colorName[0]))
+        {
+        case 'B':
+            return kBlueTarget;
+        case 'G':
+            return kGreenTarget;
+        case 'R':
+            return kRedTarget;
+        case 'Y':
+            return kYellowTarget;
+        }
+    }
+    
+    return kBlack;
+}
+
+bool ColorWheel::IsSpinning() const
+{
+    return m_colorCount >= 0 || !(m_spinToColor == kBlack);
+}
+
+void ColorWheel::SetSpinWheelMotorSpeed(double speed)
+{
+    m_spinnerWheel.Set(speed);
+}
+
+void ColorWheel::Spin(bool start)
+{
+    m_countColors = start;
+    if (start)
+    {
+        SetSpinWheelMotorSpeed(0.5);
+    }
+    else
+    {
+        SetSpinWheelMotorSpeed(0.0);
+    }
+}
+
+void ColorWheel::SpinToColor()
+{
+    SetTargetColorFromGameData();
+
+    if (m_gameDataTargetColor == kBlack)
+    {
+        return;
+    }
+
+    if (m_gameDataTargetColor == kBlueTarget)
+    {
+        m_spinToColor = kRedTarget;
+    }
+    else if (m_gameDataTargetColor == kRedTarget)
+    {
+        m_spinToColor = kBlueTarget;
+    }
+    else if (m_gameDataTargetColor == kGreenTarget)
+    {
+        m_spinToColor = kYellowTarget;
+    }
+    else if (m_gameDataTargetColor == kYellowTarget)
+    {
+        m_spinToColor = kGreenTarget;
+    }
+}
+
+void ColorWheel::SetTargetColorFromGameData()
+{
+    // ToDo: How to get this message?
+    //m_gameDataTargetColor = GetColorFromName(frc::DriverStation::GetInstance().GetGameSpecificMessage());
+    std::string colorName;
+    m_gameDataTargetColor = GetColorFromName(colorName);
+    frc::SmartDashboard::PutString(kGameDataColor, ColorName(m_gameDataTargetColor));
+}
