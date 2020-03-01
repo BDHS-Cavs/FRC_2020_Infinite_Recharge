@@ -14,6 +14,13 @@
 // std Includes
 #include "math.h"
 
+void ColorWheel::OnRobotInit() {
+    m_colorMatcher.AddColorMatch(kBlueTarget);
+    m_colorMatcher.AddColorMatch(kGreenTarget);
+    m_colorMatcher.AddColorMatch(kRedTarget);
+    m_colorMatcher.AddColorMatch(kYellowTarget);
+}
+
 void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted) {
    this->ProcessArm(rawButtonArm,rawButtonInverted);
    this->ProcessSensor();
@@ -23,12 +30,12 @@ void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
     if (rawButtonArm)
     {
         m_spinnerArm.SetInverted(false);
-        m_spinnerArm.SetSpeed(0.5);
+        m_spinnerArm.SetSpeed(0.3);
     }
     else if (rawButtonInverted)
     {
         m_spinnerArm.SetInverted(true);
-        m_spinnerArm.SetSpeed(0.4);
+        m_spinnerArm.SetSpeed(0.2);
     }
     else
     {
@@ -38,10 +45,33 @@ void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
 }
 
 void ColorWheel::ProcessSensor() {
+    double confidence = 0.0;
+    std::string colorString;
     frc::Color detectedColor = m_colorSensor.GetColor();
+    frc::Color matchedColor  = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
+    uint32_t proximity       = m_colorSensor.GetProximity();
 
-    // Display color as RGB value
-    frc::SmartDashboard::PutNumber("Red", (nearbyint(detectedColor.red * 255)));
-    frc::SmartDashboard::PutNumber("Green", (nearbyint(detectedColor.green * 255)));
-    frc::SmartDashboard::PutNumber("Blue", (nearbyint(detectedColor.blue * 255)));
+    if (matchedColor == kBlueTarget) {
+      colorString = "Blue";
+    } else if (matchedColor == kRedTarget) {
+      colorString = "Red";
+    } else if (matchedColor == kGreenTarget) {
+      colorString = "Green";
+    } else if (matchedColor == kYellowTarget) {
+      colorString = "Yellow";
+    } else {
+      colorString = "Unknown";
+    }
+
+    // Display color as "normalized" value
+    frc::SmartDashboard::PutNumber("Red", detectedColor.red);
+    frc::SmartDashboard::PutNumber("Green", detectedColor.green);
+    frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
+    frc::SmartDashboard::PutNumber("Confidence", confidence);
+
+    // Display "Detected Color"
+    frc::SmartDashboard::PutString("Detected Color", colorString);
+
+    // Display proximity
+    frc::SmartDashboard::PutNumber("Proximity", proximity);
 }

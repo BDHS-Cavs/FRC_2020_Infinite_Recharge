@@ -7,17 +7,17 @@
 
 #pragma once
 
-// FRC includes
-#include <frc/ADXRS450_Gyro.h>
-#include <frc/Joystick.h>
-#include <frc/TimedRobot.h>
-
-// Cavalier includes
+// Cavalier Includes
 #include "Subsystems/ColorWheel.h"
 #include "Subsystems/Drive.h"
 #include "Subsystems/Elevator.h"
 #include "Subsystems/Intake.h"
 #include "Subsystems/Shooter.h"
+
+// FRC Includes
+#include <frc/ADXRS450_Gyro.h>
+#include <frc/Joystick.h>
+#include <frc/TimedRobot.h>
 
 class Robot : public frc::TimedRobot {
 

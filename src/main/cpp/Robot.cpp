@@ -9,8 +9,9 @@
 #include "Robot.h"
 
 void Robot::RobotInit() {
-   m_joystick1.SetTwistChannel(kTwistAxis);
+   m_colorWheel.OnRobotInit();
    m_gyro.Calibrate();
+   m_joystick1.SetTwistChannel(kTwistAxis);
 }
 
 void Robot::AutonomousInit() {}
