@@ -13,12 +13,11 @@
 #include <frc/TimedRobot.h>
 
 // Cavalier includes
-#include "Subsystems/ColorSensor.h"
+#include "Subsystems/ColorWheel.h"
 #include "Subsystems/Drive.h"
 #include "Subsystems/Elevator.h"
 #include "Subsystems/Intake.h"
 #include "Subsystems/Shooter.h"
-#include "Subsystems/Spinner.h"
 
 class Robot : public frc::TimedRobot {
 
@@ -47,6 +46,5 @@ class Robot : public frc::TimedRobot {
    Elevator m_elevator;
    Intake m_intake;
    Shooter m_shooter;
-   ColorSensor m_colorSensor;
-   Spinner m_spinner;
+   ColorWheel m_colorWheel;
 };

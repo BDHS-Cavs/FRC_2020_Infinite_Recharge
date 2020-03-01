@@ -6,24 +6,37 @@
 /*----------------------------------------------------------------------------*/
 
 // Cavalier Includes
-#include "Subsystems/ColorSensor.h"
-#include "math.h"
+#include "Subsystems/ColorWheel.h"
 
 // FRC Includes
 #include <frc/smartdashboard/smartdashboard.h>
 
+// std Includes
+#include "math.h"
 
-void ColorSensor::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-}
+void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted) {
 
-//  Passes set speed to shooter Spark Max
-void ColorSensor::Periodic() {
     frc::Color detectedColor = m_colorSensor.GetColor();
 
     // Display color as RGB value
     frc::SmartDashboard::PutNumber("Red", (nearbyint(detectedColor.red * 255)));
     frc::SmartDashboard::PutNumber("Green", (nearbyint(detectedColor.green * 255)));
     frc::SmartDashboard::PutNumber("Blue", (nearbyint(detectedColor.blue * 255)));
+
+    if (rawButtonArm)
+    {
+        m_spinnerArm.SetInverted(false);
+        m_spinnerArm.SetSpeed(0.5);
+    }
+    else if (rawButtonInverted)
+    {
+        m_spinnerArm.SetInverted(true);
+        m_spinnerArm.SetSpeed(0.4);
+    }
+    else
+    {
+        m_spinnerArm.SetInverted(false);
+        m_spinnerArm.SetSpeed(0.0);
+    }
+    
 }

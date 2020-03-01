@@ -7,20 +7,26 @@
 
 #pragma once
 
+// FRC includes
+#include <frc/Spark.h>
+
 // Rev Robotics includes
 #include <rev/ColorSensorV3.h>
 
-class ColorSensor {
+class ColorWheel {
 
 private:
   // Constants
   static constexpr auto kI2cPort = frc::I2C::Port::kOnboard;
+  static constexpr int kspinnerArmPort   = 5;
+  static constexpr int kspinnerWheelPort = 8;
 
   // Members
+  frc::Spark m_spinnerArm{kspinnerArmPort};
+  frc::Spark m_spinnerWheel{kspinnerWheelPort};
   rev::ColorSensorV3 m_colorSensor{kI2cPort};
- public:
- 
-   // Functions
-   void InitDefaultCommand();
-   void Periodic();
+public:
+
+  // Functions
+	void Periodic(bool rawButtonArm, bool rawButtonInverted);
 };
