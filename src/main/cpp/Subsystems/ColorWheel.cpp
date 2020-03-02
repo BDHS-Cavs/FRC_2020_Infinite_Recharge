@@ -10,6 +10,7 @@
 
 // FRC Includes
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 
 // Standard Library Includes
 #include "math.h"
@@ -48,32 +49,23 @@ void ColorWheel::ProcessSensor() {
     double confidence = 0.0;
     std::string colorString;
     frc::Color detectedColor = m_colorSensor.GetColor();
-    frc::Color matchedColor  = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
+    //frc::Color matchedColor  = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
     uint32_t proximity       = m_colorSensor.GetProximity();
 
-    if (matchedColor == kBlueTarget) {
-      colorString = "Blue";
-    } else if (matchedColor == kRedTarget) {
-      colorString = "Red";
-    } else if (matchedColor == kGreenTarget) {
-      colorString = "Green";
-    } else if (matchedColor == kYellowTarget) {
-      colorString = "Yellow";
-    } else {
-      colorString = "Unknown";
-    }
-
     // Display color as "normalized" value
-    frc::SmartDashboard::PutNumber("Red", detectedColor.red);
-    frc::SmartDashboard::PutNumber("Green", detectedColor.green);
-    frc::SmartDashboard::PutNumber("Blue", detectedColor.blue);
-    frc::SmartDashboard::PutNumber("Confidence", confidence);
+    frc::SmartDashboard::PutNumber(kRedColor, detectedColor.red);
+    frc::SmartDashboard::PutNumber(kGreenColor, detectedColor.green);
+    frc::SmartDashboard::PutNumber(kBlueColor, detectedColor.blue);
+    frc::SmartDashboard::PutNumber(kColorConfidence, confidence);
 
     // Display "Detected Color"
     frc::SmartDashboard::PutString("Detected Color", colorString);
 
     // Display proximity
     frc::SmartDashboard::PutNumber("Proximity", proximity);
+
+    // Start to process 
+    this->UpdateColorSensorValues(); 
 }
 
 std::string ColorWheel::ColorName(frc::Color matchedColor) const
@@ -137,13 +129,16 @@ void ColorWheel::Spin(bool start)
 
 void ColorWheel::SpinToColor()
 {
-    SetTargetColorFromGameData();
+    // TODO: Why is this called twice?
+    // Once in SpinToColor()
+    // Again in UpdateColorSensorValues()
+    this->SetTargetColorFromGameData();
 
     if (m_gameDataTargetColor == kBlack)
     {
+        // Exit out
         return;
     }
-
     if (m_gameDataTargetColor == kBlueTarget)
     {
         m_spinToColor = kRedTarget;
@@ -165,8 +160,75 @@ void ColorWheel::SpinToColor()
 void ColorWheel::SetTargetColorFromGameData()
 {
     // ToDo: How to get this message?
-    //m_gameDataTargetColor = GetColorFromName(frc::DriverStation::GetInstance().GetGameSpecificMessage());
+    m_gameDataTargetColor = GetColorFromName(frc::DriverStation::GetInstance().GetGameSpecificMessage());
     std::string colorName;
     m_gameDataTargetColor = GetColorFromName(colorName);
     frc::SmartDashboard::PutString(kGameDataColor, ColorName(m_gameDataTargetColor));
+}
+
+void ColorWheel::UpdateColorSensorValues()
+{
+    frc::Color detectedColor = m_colorSensor.GetColor();
+    double confidence = 0.0;
+    frc::Color matchedColor = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
+
+    if (m_countColors)
+    {
+        if(m_colorCount < 0)
+        {
+            m_colorCount = 0;
+        }
+
+        if (m_lastColor == m_countedColor && !(m_lastColor == matchedColor))
+        {
+            m_colorCount++;
+        }
+        m_lastColor = matchedColor;
+
+        // stop after about 3 1/2 revolution (2 color counts per revolution)
+        if (m_colorCount >= 7)
+        {
+            this->Spin(false);
+        }
+    }
+
+    if (!(m_spinToColor == kBlack))
+    {
+        // process spinning to specific color
+        if (m_spinToColor == matchedColor)
+        {
+            m_spinToColor = kBlack;
+            this->SetSpinWheelMotorSpeed(0);
+        }
+        else
+        {
+            this->SetSpinWheelMotorSpeed(m_spinSpeed * 0.5);
+        }
+    }
+
+    // when counting is disabled reset counter
+    if (!m_countColors && m_colorCount >= 0)
+    {
+        m_colorCount = -1;
+        m_lastColor = kBlack;
+    }
+
+    frc::SmartDashboard::PutString(kDetectedColor, ColorName(matchedColor));
+    frc::SmartDashboard::PutNumber(kColorsCounted, m_colorCount);
+
+    m_debugEnable = frc::SmartDashboard::GetBoolean(kDebug, false);
+
+    if(m_debugEnable)
+    {
+        m_countColors = frc::SmartDashboard::GetBoolean(kCountColors, false);
+        m_countedColor = GetColorFromName(
+            frc::SmartDashboard::GetString(kColorToCount, ColorName(m_countedColor)));
+
+        m_spinSpeed = frc::SmartDashboard::GetNumber(kSpinSpeed, kSpinSpeedDefault);
+    }
+
+    // TODO: Why is this called twice?
+    // Once in SpinToColor()
+    // Again in UpdateColorSensorValues()
+    this->SetTargetColorFromGameData();
 }

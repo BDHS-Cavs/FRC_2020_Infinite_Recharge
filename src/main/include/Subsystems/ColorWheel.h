@@ -21,6 +21,7 @@ private:
   static constexpr auto kI2cPort = frc::I2C::Port::kOnboard;
   static constexpr int kspinnerArmPort   = 5;
   static constexpr int kspinnerWheelPort = 8;
+  const double kSpinSpeedDefault = 0.5;
 
   static constexpr frc::Color kBlack        = frc::Color(0, 0, 0);
   static constexpr frc::Color kBlueTarget   = frc::Color(0.143, 0.427, 0.429);
@@ -33,25 +34,28 @@ private:
   rev::ColorMatch    m_colorMatcher;
   frc::Spark         m_spinnerArm{kspinnerArmPort};
   frc::Spark         m_spinnerWheel{kspinnerWheelPort};
+  frc::Color         m_countedColor = kGreenTarget;
   frc::Color         m_spinToColor = kBlack;
   frc::Color         m_gameDataTargetColor = kBlack;
+  frc::Color         m_lastColor = kBlack;
   bool               m_countColors = false;
+  bool               m_debugEnable = false;
   int                m_colorCount = -1;
+  double             m_spinSpeed = kSpinSpeedDefault;
 
   // Smart Dashboard
   const std::string kCW = "CW/";
-  //const std::string kDebug = kCW + "Debug";
-  //const std::string kCountColors = kCW + "Count Colors";
-  //const std::string kColorToCount = kCW + "Color To Count";
-  //const std::string kColorsCounted = kCW + "Colors Counted";
-  //const std::string kLogColors = kCW + "Log Colors";
-  //const std::string kDetectedColor = kCW + "Detected Color";
+  const std::string kDebug = kCW + "Debug";
+  const std::string kCountColors = kCW + "Count Colors";
+  const std::string kColorToCount = kCW + "Color To Count";
+  const std::string kColorsCounted = kCW + "Colors Counted";
+  const std::string kDetectedColor = kCW + "Detected Color";
   const std::string kGameDataColor = kCW + "Game Data Color";
-  //const std::string kRedColor = kCW + "Red Color";
-  //const std::string kGreenColor = kCW + "Green Color";
-  //const std::string kBlueColor = kCW + "Blue Color";
-  //const std::string kColorConfidence = kCW + "Color Confidence";
-  //const std::string kSpinSpeed = kCW + "Spin Speed";
+  const std::string kRedColor = kCW + "Red Color";
+  const std::string kGreenColor = kCW + "Green Color";
+  const std::string kBlueColor = kCW + "Blue Color";
+  const std::string kColorConfidence = kCW + "Color Confidence";
+  const std::string kSpinSpeed = kCW + "Spin Speed";
 
 public:
 
@@ -67,4 +71,5 @@ public:
   void SetTargetColorFromGameData();
   void Spin(bool start);
   void SpinToColor();
+  void UpdateColorSensorValues();
 };
