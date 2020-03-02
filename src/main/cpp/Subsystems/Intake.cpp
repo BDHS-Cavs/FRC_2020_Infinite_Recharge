@@ -18,12 +18,10 @@ void Intake::InitDefaultCommand() {
 void Intake::Periodic(bool rawButton0, bool rawButton2) {
     if (rawButton0)
     {
-        m_intakeMotor.SetSpeed(0.75);
+        m_intakeMotor.SetSpeed(1.0);
     }
     else
     {
-        m_intakeMotor.SetSpeed(-0.75);
+        m_intakeMotor.SetSpeed(-1.0);
     };
 }
-
-
