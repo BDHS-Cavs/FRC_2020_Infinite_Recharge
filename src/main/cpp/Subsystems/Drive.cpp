@@ -8,6 +8,8 @@
 // Cavalier Includes
 #include "Subsystems/Drive.h"
 
+// FRC Includes
+#include <frc/smartdashboard/SmartDashboard.h>
 
 void Drive::InitDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -16,5 +18,7 @@ void Drive::InitDefaultCommand() {
 
 void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle) {
     m_robotDrive.DriveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
+
+    frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
 }
 

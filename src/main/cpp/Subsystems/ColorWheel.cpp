@@ -9,9 +9,9 @@
 #include "Subsystems/ColorWheel.h"
 
 // FRC Includes
-#include <frc/smartdashboard/smartdashboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
-// std Includes
+// Standard Library Includes
 #include "math.h"
 
 void ColorWheel::OnRobotInit() {
