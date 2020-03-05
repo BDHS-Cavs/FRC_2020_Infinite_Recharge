@@ -8,6 +8,8 @@
 // Cavalier Includes
 #include "Subsystems/Elevator.h"
 
+// FRC Includes
+#include <frc/smartdashboard/SmartDashboard.h>
 
 void Elevator::InitDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -15,14 +17,21 @@ void Elevator::InitDefaultCommand() {
 }
 
 //  Passes joysick values to the elevator spark
-void Elevator::Periodic(bool rawButton0, bool rawbutton2) {
-    if (rawButton0)
-    {
-        m_liftMotor.SetSpeed(1.0);
-    }
-    else
-    {
-        m_liftMotor.SetSpeed(-1.0);
-    };
-}
+//void Elevator::Periodic(bool rawButton1, bool rawButton3) {
+//    if (rawButton1)
+//    {
+//        m_liftMotor.Set(1.0);
+//        std::cout << " Elevator Motor Speed" << m_liftMotor.Get() << "\n";
+//    }
+//    else if (rawButton3)
+//    {
+//        m_liftMotor.Set(-1.0);
+//    }
+//    else
+//    {
+//        m_liftMotor.Set(0.0);
+//    };
+//
+//    frc::SmartDashboard::PutNumber("Elevator Motor Speed", m_liftMotor.Get());
+//}
 

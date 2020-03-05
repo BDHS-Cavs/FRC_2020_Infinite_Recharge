@@ -20,7 +20,7 @@ private:
   // Constants
   static constexpr auto kI2cPort = frc::I2C::Port::kOnboard;
   static constexpr int kspinnerArmPort   = 5;
-  static constexpr int kspinnerWheelPort = 8;
+  static constexpr int kspinnerWheelPort = 4;
   const double kSpinSpeedDefault = 0.5;
 
   static constexpr frc::Color kBlack        = frc::Color(0, 0, 0);
