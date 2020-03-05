@@ -39,11 +39,13 @@ void Intake::Periodic(bool rawButton1, bool rawButton3, bool rawButton2, bool ra
     {
         m_intakeRaiseLower.Set(0.3);
 
-        std::cout << " Intake Raise/Lower Speed" << m_intakeRaiseLower.Get() << "\n";
+        std::cout << " Intake Raise Speed" << m_intakeRaiseLower.Get() << "\n";
     }
     else if (rawButton4)
     {
         m_intakeRaiseLower.Set(-0.3);
+
+        std::cout << " Intake Lower Speed" << m_intakeRaiseLower.Get() << "\n";
     }
     else
     {

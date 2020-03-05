@@ -14,14 +14,14 @@ class Elevator {
 
 private:
   // Constants
-  //static constexpr int kLiftMech = 6;
+  static constexpr int kLiftMech = 6;
 
   // Members
-  //frc::Spark m_liftMotor{kLiftMech};
+  frc::Spark m_liftMotor{kLiftMech};
 
 public:
 
   //Functions
   void InitDefaultCommand();
-	//void Periodic(bool rawButton1, bool rawButton3);
+	void Periodic(bool rawButton1, bool rawButton3);
 };

@@ -13,25 +13,28 @@
 
 void Elevator::InitDefaultCommand() {
     // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
+    //SetDefaultCommand(new MySpecialCommand());
 }
 
 //  Passes joysick values to the elevator spark
-//void Elevator::Periodic(bool rawButton1, bool rawButton3) {
-//    if (rawButton1)
-//    {
-//        m_liftMotor.Set(1.0);
-//        std::cout << " Elevator Motor Speed" << m_liftMotor.Get() << "\n";
-//    }
-//    else if (rawButton3)
-//    {
-//        m_liftMotor.Set(-1.0);
-//    }
-//    else
-//    {
-//        m_liftMotor.Set(0.0);
-//    };
-//
-//    frc::SmartDashboard::PutNumber("Elevator Motor Speed", m_liftMotor.Get());
-//}
+void Elevator::Periodic(bool rawButton1, bool rawButton3) {
+    if (rawButton1)
+    {
+        m_liftMotor.Set(0.5);
+
+        std::cout << " Elevator Forward Motor Speed" << m_liftMotor.Get() << "\n";
+    }
+    else if (rawButton3)
+    {
+        m_liftMotor.Set(-0.5);
+
+        std::cout << " Elevator Backward Motor Speed" << m_liftMotor.Get() << "\n";
+    }
+    else
+    {
+        m_liftMotor.Set(0.0);
+    };
+
+    frc::SmartDashboard::PutNumber("Elevator Motor Speed", m_liftMotor.Get());
+}
 
