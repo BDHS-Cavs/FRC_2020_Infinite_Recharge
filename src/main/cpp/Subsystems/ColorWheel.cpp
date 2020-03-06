@@ -22,26 +22,30 @@ void ColorWheel::OnRobotInit() {
     m_colorMatcher.AddColorMatch(kYellowTarget);
 }
 
-void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted) {
+void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning) {
    this->ProcessArm(rawButtonArm,rawButtonInverted);
-   this->ProcessSensor();
+   // Temporarily commented out to test spinning w/o sensing
+   //this->ProcessSensor();
+   this->Spin(rawButtonStartSpinning);
 }
 
 void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
     if (rawButtonArm)
     {
         m_spinnerArm.SetInverted(false);
-        m_spinnerArm.SetSpeed(0.3);
+        m_spinnerArm.Set(0.3);
+        std::cout << " Spinner Arm Raise Speed" << m_spinnerArm.Get() << "\n";
     }
     else if (rawButtonInverted)
     {
         m_spinnerArm.SetInverted(true);
-        m_spinnerArm.SetSpeed(0.2);
+        m_spinnerArm.Set(0.2);
+        std::cout << " Spinner Arm Lower Speed" << m_spinnerArm.Get() << "\n";
     }
     else
     {
         m_spinnerArm.SetInverted(false);
-        m_spinnerArm.SetSpeed(0.0);
+        m_spinnerArm.Set(0.0);
     }
 }
 
@@ -112,6 +116,7 @@ bool ColorWheel::IsSpinning() const
 void ColorWheel::SetSpinWheelMotorSpeed(double speed)
 {
     m_spinnerWheel.Set(speed);
+    std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
 }
 
 void ColorWheel::Spin(bool start)

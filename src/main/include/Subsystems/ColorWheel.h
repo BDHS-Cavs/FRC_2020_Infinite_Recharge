@@ -64,7 +64,7 @@ public:
   frc::Color GetColorFromName(std::string colorName) const;
   bool IsSpinning() const;
   void OnRobotInit();
-	void Periodic(bool rawButtonArm, bool rawButtonInverted);
+	void Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning);
 	void ProcessArm(bool rawButtonArm, bool rawButtonInverted);
 	void ProcessSensor();
   void SetSpinWheelMotorSpeed(double speed);
