@@ -28,8 +28,19 @@ void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyro
     // added a dead zone to the Z so it is less touchy
 
     double flippedY = (ySpeed * -1.0);
-    double deadZoneZ = (zRotation * 0.5);
-    m_robotDrive.DriveCartesian(xSpeed, flippedY, deadZoneZ, gyroAngle);
+    double z;
+    double deadZone = 0.25;
+
+    if (fabs(zRotation) < deadZone)
+    {
+        z = 0.0;
+    }
+    else
+    {
+        z = zRotation;
+    };
+
+    m_robotDrive.DriveCartesian(xSpeed, flippedY, z, gyroAngle);
 
     frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
 }
