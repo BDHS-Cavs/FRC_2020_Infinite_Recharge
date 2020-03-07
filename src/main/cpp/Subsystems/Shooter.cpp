@@ -22,6 +22,6 @@ void Shooter::Periodic(bool rawButtonShoot) {
    }
    else
    {
-       m_shooter.Set(0.0);
+       m_shooter.StopMotor();
    }
 }
