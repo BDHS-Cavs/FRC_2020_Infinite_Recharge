@@ -33,13 +33,13 @@ void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
     if (rawButtonArm)
     {
         m_spinnerArm.SetInverted(false);
-        m_spinnerArm.Set(0.3);
+        m_spinnerArm.Set(0.5);
         std::cout << " Spinner Arm Raise Speed" << m_spinnerArm.Get() << "\n";
     }
     else if (rawButtonInverted)
     {
         m_spinnerArm.SetInverted(true);
-        m_spinnerArm.Set(0.2);
+        m_spinnerArm.Set(0.5);
         std::cout << " Spinner Arm Lower Speed" << m_spinnerArm.Get() << "\n";
     }
     else
