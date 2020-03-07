@@ -37,13 +37,13 @@ void Intake::Periodic(bool rawButton1, bool rawButton3, bool rawButton2, bool ra
     // Raise and lower the Intake bar
     if (rawButton2)
     {
-        m_intakeRaiseLower.Set(0.3);
+        m_intakeRaiseLower.Set(1.0);
 
         std::cout << " Intake Raise Speed" << m_intakeRaiseLower.Get() << "\n";
     }
     else if (rawButton4)
     {
-        m_intakeRaiseLower.Set(-0.3);
+        m_intakeRaiseLower.Set(-1.0);
 
         std::cout << " Intake Lower Speed" << m_intakeRaiseLower.Get() << "\n";
     }
