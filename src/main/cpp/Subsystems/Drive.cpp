@@ -17,7 +17,19 @@ void Drive::InitDefaultCommand() {
 }
 
 void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle) {
-    m_robotDrive.DriveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
+    // This SHOULD NOT HAVE TO BE DONE!!
+    // Every document and API says we should feed the DriveCartesian function as follows:
+    //
+    // m_robotDrive.DriveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
+    // 
+    // but our bot does not respond that way.  We have done the following:
+    // reversed the Y and X inputs into the function
+    // "flipped" the Y so it's inputs are inverted
+    // added a dead zone to the Z so it is less touchy
+
+    double flippedY = (ySpeed * -1.0);
+    double deadZoneZ = (zRotation * 0.5);
+    m_robotDrive.DriveCartesian(xSpeed, flippedY, deadZoneZ, gyroAngle);
 
     frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
 }
