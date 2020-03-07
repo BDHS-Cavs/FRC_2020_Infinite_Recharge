@@ -44,18 +44,17 @@ private:
   double             m_spinSpeed = kSpinSpeedDefault;
 
   // Smart Dashboard
-  const std::string kCW = "CW/";
-  const std::string kDebug = kCW + "Debug";
-  const std::string kCountColors = kCW + "Count Colors";
-  const std::string kColorToCount = kCW + "Color To Count";
-  const std::string kColorsCounted = kCW + "Colors Counted";
-  const std::string kDetectedColor = kCW + "Detected Color";
-  const std::string kGameDataColor = kCW + "Game Data Color";
-  const std::string kRedColor = kCW + "Red Color";
-  const std::string kGreenColor = kCW + "Green Color";
-  const std::string kBlueColor = kCW + "Blue Color";
-  const std::string kColorConfidence = kCW + "Color Confidence";
-  const std::string kSpinSpeed = kCW + "Spin Speed";
+  const std::string kDebug           = "Debug";
+  const std::string kCountColors     = "Count Colors";
+  const std::string kColorToCount    = "Color To Count";
+  const std::string kColorsCounted   = "Colors Counted";
+  const std::string kDetectedColor   = "Detected Color";
+  const std::string kGameDataColor   = "Game Data Color";
+  const std::string kRedColor        = "Red Color";
+  const std::string kGreenColor      = "Green Color";
+  const std::string kBlueColor       = "Blue Color";
+  const std::string kColorConfidence = "Color Confidence";
+  const std::string kSpinSpeed       = "Spin Speed";
 
 public:
 
@@ -66,10 +65,10 @@ public:
   void OnRobotInit();
 	void Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning);
 	void ProcessArm(bool rawButtonArm, bool rawButtonInverted);
-	void ProcessSensor();
+	void ProcessSensor(bool startSpinning);
   void SetSpinWheelMotorSpeed(double speed);
   void SetTargetColorFromGameData();
   void Spin(bool start);
   void SpinToColor();
-  void UpdateColorSensorValues();
+  void UpdateColorSensorValues(bool startSpinning);
 };

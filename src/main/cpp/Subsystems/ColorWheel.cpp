@@ -24,9 +24,7 @@ void ColorWheel::OnRobotInit() {
 
 void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning) {
    this->ProcessArm(rawButtonArm,rawButtonInverted);
-   // Temporarily commented out to test spinning w/o sensing
-   //this->ProcessSensor();
-   this->Spin(rawButtonStartSpinning);
+   this->ProcessSensor(rawButtonStartSpinning);
 }
 
 void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
@@ -49,7 +47,7 @@ void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
     }
 }
 
-void ColorWheel::ProcessSensor() {
+void ColorWheel::ProcessSensor(bool startSpinning) {
     double confidence = 0.0;
     std::string colorString;
     frc::Color detectedColor = m_colorSensor.GetColor();
@@ -69,7 +67,7 @@ void ColorWheel::ProcessSensor() {
     frc::SmartDashboard::PutNumber("Proximity", proximity);
 
     // Start to process 
-    this->UpdateColorSensorValues(); 
+    this->UpdateColorSensorValues(startSpinning); 
 }
 
 std::string ColorWheel::ColorName(frc::Color matchedColor) const
@@ -116,15 +114,14 @@ bool ColorWheel::IsSpinning() const
 void ColorWheel::SetSpinWheelMotorSpeed(double speed)
 {
     m_spinnerWheel.Set(speed);
-    std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
 }
 
-void ColorWheel::Spin(bool start)
+void ColorWheel::Spin(bool startSpinning)
 {
-    m_countColors = start;
-    if (start)
+    m_countColors = startSpinning;
+    if (startSpinning)
     {
-        SetSpinWheelMotorSpeed(0.5);
+        SetSpinWheelMotorSpeed(0.2);
         std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
     }
     else
@@ -172,14 +169,17 @@ void ColorWheel::SetTargetColorFromGameData()
     frc::SmartDashboard::PutString(kGameDataColor, ColorName(m_gameDataTargetColor));
 }
 
-void ColorWheel::UpdateColorSensorValues()
+void ColorWheel::UpdateColorSensorValues(bool startSpinning)
 {
     frc::Color detectedColor = m_colorSensor.GetColor();
     double confidence = 0.0;
     frc::Color matchedColor = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
 
+    this->Spin(startSpinning);
+
     if (m_countColors)
     {
+        std::cout << "m_colorCount is " << m_colorCount << " \n";
         if(m_colorCount < 0)
         {
             m_colorCount = 0;
