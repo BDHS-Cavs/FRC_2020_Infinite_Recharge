@@ -116,6 +116,7 @@ bool ColorWheel::IsSpinning() const
 void ColorWheel::SetSpinWheelMotorSpeed(double speed)
 {
     m_spinnerWheel.Set(speed);
+    std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
 }
 
 void ColorWheel::Spin(bool start)
