@@ -26,4 +26,5 @@ private:
    //Functions
    void OnRobotInit();
    void Periodic(bool rawButtonShoot);
+   void OnRobotInit();
 };
