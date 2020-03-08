@@ -11,9 +11,8 @@
 // FRC Includes
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Shooter::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
+void Shooter::OnRobotInit() {
+    m_shooterLeft.SetInverted(true);
 }
 
 //  Passes set speed to shooter Spark Max

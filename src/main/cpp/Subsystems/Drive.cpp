@@ -41,7 +41,5 @@ void Drive::Periodic(double ySpeed, double xSpeed, double zRotation) {
     };
 
     m_robotDrive.DriveCartesian(xSpeed, flippedY, z);
-
-    //frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
 }
 

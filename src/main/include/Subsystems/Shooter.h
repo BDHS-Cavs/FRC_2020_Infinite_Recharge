@@ -8,21 +8,22 @@
 #pragma once
 
 // FRC includes
-#include <frc/PWMSparkMax.h>
+#include <rev/CANSparkMax.h>
 
 class Shooter {
 
 private:
   // Constants
-  static constexpr int kLauncherLeft  = 8; // left
-  static constexpr int kLauncherRight = 9; // right
+  static constexpr int kLauncherLeft  = 2; // left
+  static constexpr int kLauncherRight = 1; // right
 
   // Members
-  frc::PWMSparkMax m_shooterLeft{kLauncherLeft};
-  frc::PWMSparkMax m_shooterRight{kLauncherRight};
+  rev::CANSparkMax m_shooterLeft{kLauncherLeft, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax m_shooterRight{kLauncherRight, rev::CANSparkMax::MotorType::kBrushless};
 
  public:
+
    //Functions
-   void InitDefaultCommand();
+   void OnRobotInit();
    void Periodic(bool rawButtonShoot);
 };
