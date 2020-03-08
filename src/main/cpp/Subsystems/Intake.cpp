@@ -11,19 +11,12 @@
 // FRC Includes
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Intake::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-}
-
 //  Passes joysick values to the intake Sparks 
 void Intake::Periodic(bool rawButton1, bool rawButton3) {
     // Spin the Intake in or out
     if (rawButton1)
     {
         m_intakeMotor.Set(1.0);
-
-        std::cout << " Intake Motor Speed" << m_intakeMotor.Get() << "\n";
     }
     else if (rawButton3)
     {

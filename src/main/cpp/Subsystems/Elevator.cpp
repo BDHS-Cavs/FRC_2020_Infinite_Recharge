@@ -11,24 +11,15 @@
 // FRC Includes
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Elevator::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    //SetDefaultCommand(new MySpecialCommand());
-}
-
 //  Passes joysick values to the elevator spark
 void Elevator::Periodic(bool rawButton1, bool rawButton3) {
     if (rawButton1)
     {
         m_liftMotor.Set(0.5);
-
-        std::cout << " Elevator Forward Motor Speed" << m_liftMotor.Get() << "\n";
     }
     else if (rawButton3)
     {
         m_liftMotor.Set(-0.5);
-
-        std::cout << " Elevator Backward Motor Speed" << m_liftMotor.Get() << "\n";
     }
     else
     {

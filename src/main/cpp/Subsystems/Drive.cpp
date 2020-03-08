@@ -11,11 +11,6 @@
 // FRC Includes
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Drive::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-}
-
 void Drive::Periodic(double ySpeed, double xSpeed, double zRotation) {
     // This SHOULD NOT HAVE TO BE DONE!!
     // Every document and API says we should feed the DriveCartesian function as follows:

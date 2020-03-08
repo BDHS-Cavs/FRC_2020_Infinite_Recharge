@@ -30,6 +30,5 @@ private:
 public:
 
   // Functions
-  void InitDefaultCommand();
 	void Periodic(double ySpeed, double xSpeed, double zRotation);
 };

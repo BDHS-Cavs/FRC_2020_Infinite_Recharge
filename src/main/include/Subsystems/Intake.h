@@ -22,6 +22,5 @@ private:
 public:
 
   // Functions
-  void InitDefaultCommand();
 	void Periodic(bool rawButton1, bool rawButton3);
 };
