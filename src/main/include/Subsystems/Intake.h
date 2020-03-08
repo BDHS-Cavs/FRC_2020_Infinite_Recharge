@@ -15,15 +15,13 @@ class Intake {
 private:
   // Constants
   static constexpr int kBeaterBar  = 7;
-  static constexpr int kRaiseLower = 8;
 
   // Members
   frc::Spark m_intakeMotor{kBeaterBar};
-  frc::Spark m_intakeRaiseLower{kRaiseLower};
 
 public:
 
   // Functions
   void InitDefaultCommand();
-	void Periodic(bool rawButton1, bool rawButton3, bool rawButton2, bool rawButton4);
+	void Periodic(bool rawButton1, bool rawButton3);
 };

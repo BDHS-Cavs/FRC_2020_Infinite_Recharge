@@ -16,7 +16,7 @@ void Drive::InitDefaultCommand() {
     // SetDefaultCommand(new MySpecialCommand());
 }
 
-void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle) {
+void Drive::Periodic(double ySpeed, double xSpeed, double zRotation) {
     // This SHOULD NOT HAVE TO BE DONE!!
     // Every document and API says we should feed the DriveCartesian function as follows:
     //
@@ -40,8 +40,8 @@ void Drive::Periodic(double ySpeed, double xSpeed, double zRotation, double gyro
         z = zRotation;
     };
 
-    m_robotDrive.DriveCartesian(xSpeed, flippedY, z, gyroAngle);
+    m_robotDrive.DriveCartesian(xSpeed, flippedY, z);
 
-    frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
+    //frc::SmartDashboard::PutNumber("Gyro Angle", gyroAngle);
 }
 

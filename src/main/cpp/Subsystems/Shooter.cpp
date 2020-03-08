@@ -8,6 +8,8 @@
 // Cavalier Includes
 #include "Subsystems/Shooter.h"
 
+// FRC Includes
+#include <frc/smartdashboard/SmartDashboard.h>
 
 void Shooter::InitDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -18,10 +20,15 @@ void Shooter::InitDefaultCommand() {
 void Shooter::Periodic(bool rawButtonShoot) {
    if (rawButtonShoot)
    {
-       m_shooter.Set(0.75);
+       m_shooterLeft.Set(0.75);
+       m_shooterRight.Set(0.75);
    }
    else
    {
-       m_shooter.StopMotor();
+       m_shooterLeft.StopMotor();
+       m_shooterRight.StopMotor();
    }
+
+    frc::SmartDashboard::PutNumber("Shooter Left Motor Speed", m_shooterLeft.Get());
+    frc::SmartDashboard::PutNumber("Shooter Right Motor Speed", m_shooterRight.Get());
 }

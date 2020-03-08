@@ -121,7 +121,7 @@ void ColorWheel::Spin(bool startSpinning)
     m_countColors = startSpinning;
     if (startSpinning)
     {
-        SetSpinWheelMotorSpeed(0.2);
+        SetSpinWheelMotorSpeed(1.0);
         std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
     }
     else
@@ -198,26 +198,26 @@ void ColorWheel::UpdateColorSensorValues(bool startSpinning)
         }
     }
 
-    if (!(m_spinToColor == kBlack))
-    {
-        // process spinning to specific color
-        if (m_spinToColor == matchedColor)
-        {
-            m_spinToColor = kBlack;
-            this->SetSpinWheelMotorSpeed(0);
-        }
-        else
-        {
-            this->SetSpinWheelMotorSpeed(m_spinSpeed * 0.5);
-        }
-    }
+    //if (!(m_spinToColor == kBlack))
+    //{
+    //    // process spinning to specific color
+    //    if (m_spinToColor == matchedColor)
+    //    {
+    //        m_spinToColor = kBlack;
+    //        this->SetSpinWheelMotorSpeed(0);
+    //    }
+    //    else
+    //    {
+    //        this->SetSpinWheelMotorSpeed(m_spinSpeed * 0.5);
+    //    }
+    //}
 
-    // when counting is disabled reset counter
-    if (!m_countColors && m_colorCount >= 0)
-    {
-        m_colorCount = -1;
-        m_lastColor = kBlack;
-    }
+    //// when counting is disabled reset counter
+    //if (!m_countColors && m_colorCount >= 0)
+    //{
+    //    m_colorCount = -1;
+    //    m_lastColor = kBlack;
+    //}
 
     frc::SmartDashboard::PutString(kDetectedColor, ColorName(matchedColor));
     frc::SmartDashboard::PutNumber(kColorsCounted, m_colorCount);

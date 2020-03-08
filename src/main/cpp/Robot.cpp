@@ -10,7 +10,7 @@
 
 void Robot::RobotInit() {
    m_colorWheel.OnRobotInit();
-   m_gyro.Calibrate();
+   //m_gyro.Calibrate();
    m_joystick1.SetTwistChannel(kTwistAxis);
 }
 
@@ -23,9 +23,9 @@ void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
    // Joystick 1 = Drive, Joystick 2 = Non-Drive Controls
    m_colorWheel.Periodic(m_joystick2.GetRawButton(7), m_joystick2.GetRawButton(8), m_joystick2.GetRawButton(9));
-	m_drive.Periodic(m_joystick1.GetY(), m_joystick1.GetX(), m_joystick1.GetTwist(), m_gyro.GetAngle());
+	m_drive.Periodic(m_joystick1.GetY(), m_joystick1.GetX(), m_joystick1.GetTwist());
    m_elevator.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(3));
-   m_intake.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(3), m_joystick2.GetRawButton(2), m_joystick2.GetRawButton(4));
+   m_intake.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(3));
    m_shooter.Periodic(m_joystick2.GetRawButton(5));
 }
 

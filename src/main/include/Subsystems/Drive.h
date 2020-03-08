@@ -31,5 +31,5 @@ public:
 
   // Functions
   void InitDefaultCommand();
-	void Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle);
+	void Periodic(double ySpeed, double xSpeed, double zRotation);
 };

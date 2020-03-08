@@ -14,10 +14,12 @@ class Shooter {
 
 private:
   // Constants
-  static constexpr int kLauncher = 9;
+  static constexpr int kLauncherLeft  = 8; // left
+  static constexpr int kLauncherRight = 9; // right
 
   // Members
-  frc::PWMSparkMax m_shooter{kLauncher};
+  frc::PWMSparkMax m_shooterLeft{kLauncherLeft};
+  frc::PWMSparkMax m_shooterRight{kLauncherRight};
 
  public:
    //Functions

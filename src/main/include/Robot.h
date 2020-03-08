@@ -41,7 +41,7 @@ class Robot : public frc::TimedRobot {
    // Members
    frc::Joystick m_joystick1{kJoystickPort1};
    frc::Joystick m_joystick2{kJoystickPort2};
-   frc::ADXRS450_Gyro m_gyro;
+   //frc::ADXRS450_Gyro m_gyro;
    Drive m_drive;
    Elevator m_elevator;
    Intake m_intake;

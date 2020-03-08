@@ -17,7 +17,7 @@ void Intake::InitDefaultCommand() {
 }
 
 //  Passes joysick values to the intake Sparks 
-void Intake::Periodic(bool rawButton1, bool rawButton3, bool rawButton2, bool rawButton4) {
+void Intake::Periodic(bool rawButton1, bool rawButton3) {
     // Spin the Intake in or out
     if (rawButton1)
     {
@@ -32,24 +32,6 @@ void Intake::Periodic(bool rawButton1, bool rawButton3, bool rawButton2, bool ra
     else
     {
         m_intakeMotor.Set(0.0);
-    };
-
-    // Raise and lower the Intake bar
-    if (rawButton2)
-    {
-        m_intakeRaiseLower.Set(1.0);
-
-        std::cout << " Intake Raise Speed" << m_intakeRaiseLower.Get() << "\n";
-    }
-    else if (rawButton4)
-    {
-        m_intakeRaiseLower.Set(-1.0);
-
-        std::cout << " Intake Lower Speed" << m_intakeRaiseLower.Get() << "\n";
-    }
-    else
-    {
-        m_intakeRaiseLower.Set(0.0);
     };
 
     frc::SmartDashboard::PutNumber("Intake Motor Speed", m_intakeMotor.Get());
