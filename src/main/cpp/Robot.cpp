@@ -10,7 +10,7 @@
 
 void Robot::RobotInit() {
    m_colorWheel.OnRobotInit();
-   //m_gyro.Calibrate();
+   m_shooter.OnRobotInit();
    m_joystick1.SetTwistChannel(kTwistAxis);
 }
 
