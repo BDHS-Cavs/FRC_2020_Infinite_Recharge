@@ -39,22 +39,25 @@ private:
   frc::Color         m_gameDataTargetColor = kBlack;
   frc::Color         m_lastColor = kBlack;
   bool               m_countColors = false;
-  bool               m_debugEnable = false;
+  bool               m_togglePressed = false;
   int                m_colorCount = -1;
   double             m_spinSpeed = kSpinSpeedDefault;
 
   // Smart Dashboard
-  const std::string kDebug           = "Debug";
-  const std::string kCountColors     = "Count Colors";
-  const std::string kColorToCount    = "Color To Count";
+  const std::string kColorConfidence = "Color Confidence";
   const std::string kColorsCounted   = "Colors Counted";
+  const std::string kColorToCount    = "Color To Count";
+  const std::string kCountColors     = "Count Colors";
   const std::string kDetectedColor   = "Detected Color";
   const std::string kGameDataColor   = "Game Data Color";
+  const std::string kMatchedColor    = "Matched Color";
+  const std::string kProximity       = "Proximity";
+  const std::string kSpinWheelSpeed  = "Spinner Wheel Speed";
+  const std::string kSpinArmSpeed    = "Spinner Arm Speed";
+  const std::string kTogglePressed   = "Toggle Pressed";
   const std::string kRedColor        = "Red Color";
   const std::string kGreenColor      = "Green Color";
   const std::string kBlueColor       = "Blue Color";
-  const std::string kColorConfidence = "Color Confidence";
-  const std::string kSpinSpeed       = "Spin Speed";
 
 public:
 
@@ -63,12 +66,12 @@ public:
   frc::Color GetColorFromName(std::string colorName) const;
   bool IsSpinning() const;
   void OnRobotInit();
-	void Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning);
-	void ProcessArm(bool rawButtonArm, bool rawButtonInverted);
-	void ProcessSensor(bool startSpinning);
+  void Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning);
+  void ProcessArm(bool rawButtonArm, bool rawButtonInverted);
+  void ProcessSensor();
   void SetSpinWheelMotorSpeed(double speed);
   void SetTargetColorFromGameData();
-  void Spin(bool start);
+  void Spin();
   void SpinToColor();
-  void UpdateColorSensorValues(bool startSpinning);
+  void UpdateToggle(bool toggle);
 };

@@ -24,7 +24,8 @@ void ColorWheel::OnRobotInit() {
 
 void ColorWheel::Periodic(bool rawButtonArm, bool rawButtonInverted, bool rawButtonStartSpinning) {
    this->ProcessArm(rawButtonArm,rawButtonInverted);
-   this->ProcessSensor(rawButtonStartSpinning);
+   this->UpdateToggle(rawButtonStartSpinning);
+   this->ProcessSensor();
 }
 
 void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
@@ -32,27 +33,29 @@ void ColorWheel::ProcessArm(bool rawButtonArm, bool rawButtonInverted) {
     {
         m_spinnerArm.SetInverted(false);
         m_spinnerArm.Set(0.5);
-        std::cout << " Spinner Arm Raise Speed" << m_spinnerArm.Get() << "\n";
     }
     else if (rawButtonInverted)
     {
         m_spinnerArm.SetInverted(true);
         m_spinnerArm.Set(0.5);
-        std::cout << " Spinner Arm Lower Speed" << m_spinnerArm.Get() << "\n";
     }
     else
     {
         m_spinnerArm.SetInverted(false);
         m_spinnerArm.Set(0.0);
     }
+
+    // Display Spinner Arm Speed
+    frc::SmartDashboard::PutNumber(kSpinArmSpeed, m_spinnerArm.Get());
 }
 
-void ColorWheel::ProcessSensor(bool startSpinning) {
+void ColorWheel::ProcessSensor() {
+    // Set up for Smart Dashboard display & Processing
     double confidence = 0.0;
     std::string colorString;
-    frc::Color detectedColor = m_colorSensor.GetColor();
-    //frc::Color matchedColor  = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
     uint32_t proximity       = m_colorSensor.GetProximity();
+    frc::Color detectedColor = m_colorSensor.GetColor();
+    frc::Color matchedColor  = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
 
     // Display color as "normalized" value
     frc::SmartDashboard::PutNumber(kRedColor, detectedColor.red);
@@ -61,13 +64,65 @@ void ColorWheel::ProcessSensor(bool startSpinning) {
     frc::SmartDashboard::PutNumber(kColorConfidence, confidence);
 
     // Display "Detected Color"
-    frc::SmartDashboard::PutString("Detected Color", colorString);
+    frc::SmartDashboard::PutString(kDetectedColor, colorString);
 
     // Display proximity
-    frc::SmartDashboard::PutNumber("Proximity", proximity);
+    frc::SmartDashboard::PutNumber(kProximity, proximity);
 
-    // Start to process 
-    this->UpdateColorSensorValues(startSpinning); 
+    // Display color count
+    frc::SmartDashboard::PutNumber(kColorsCounted, m_colorCount);
+
+    // Display matched color 
+    frc::SmartDashboard::PutString(kMatchedColor, ColorName(matchedColor));
+
+    // Display spin "enabled"
+    frc::SmartDashboard::PutBoolean(kTogglePressed, m_togglePressed);
+
+    this->Spin();
+
+    if (m_countColors)
+    {
+        // process spinning specific number of times 
+        if(m_colorCount < 0)
+        {
+            m_colorCount = 0;
+        }
+
+        if (m_lastColor == m_countedColor && !(m_lastColor == matchedColor))
+        {
+            m_colorCount++;
+        }
+        m_lastColor = matchedColor;
+
+        // stop after about 3 1/2 revolution (2 color counts per revolution)
+        if (m_colorCount >= 7)
+        {
+            m_togglePressed = false;
+        }
+    }
+
+    if (!(m_spinToColor == kBlack))
+    {
+        // process spinning to specific color
+        if (m_spinToColor == matchedColor)
+        {
+            m_spinToColor = kBlack;
+            this->SetSpinWheelMotorSpeed(0);
+        }
+        else
+        {
+            this->SetSpinWheelMotorSpeed(m_spinSpeed * 0.5);
+        }
+    }
+
+    // when counting is disabled reset counter
+    if (!m_countColors && m_colorCount >= 0)
+    {
+        m_colorCount = -1;
+        m_lastColor = kBlack;
+    }
+
+    this->SetTargetColorFromGameData();
 }
 
 std::string ColorWheel::ColorName(frc::Color matchedColor) const
@@ -116,25 +171,25 @@ void ColorWheel::SetSpinWheelMotorSpeed(double speed)
     m_spinnerWheel.Set(speed);
 }
 
-void ColorWheel::Spin(bool startSpinning)
+void ColorWheel::Spin()
 {
-    m_countColors = startSpinning;
-    if (startSpinning)
+    if (m_togglePressed)
     {
         SetSpinWheelMotorSpeed(1.0);
-        std::cout << " Spinner Wheel Spin Speed" << m_spinnerWheel.Get() << "\n";
+        m_countColors = true;
     }
     else
     {
         SetSpinWheelMotorSpeed(0.0);
+        m_countColors = false;
     }
+
+    // Display Spinner Wheel Speed
+    frc::SmartDashboard::PutNumber(kSpinWheelSpeed, m_spinnerWheel.Get());
 }
 
 void ColorWheel::SpinToColor()
 {
-    // TODO: Why is this called twice?
-    // Once in SpinToColor()
-    // Again in UpdateColorSensorValues()
     this->SetTargetColorFromGameData();
 
     if (m_gameDataTargetColor == kBlack)
@@ -169,72 +224,17 @@ void ColorWheel::SetTargetColorFromGameData()
     frc::SmartDashboard::PutString(kGameDataColor, ColorName(m_gameDataTargetColor));
 }
 
-void ColorWheel::UpdateColorSensorValues(bool startSpinning)
+void ColorWheel::UpdateToggle(bool rawButtonStartSpinning)
 {
-    frc::Color detectedColor = m_colorSensor.GetColor();
-    double confidence = 0.0;
-    frc::Color matchedColor = m_colorMatcher.MatchClosestColor(detectedColor, confidence);
-
-    this->Spin(startSpinning);
-
-    if (m_countColors)
+    if (rawButtonStartSpinning)
     {
-        std::cout << "m_colorCount is " << m_colorCount << " \n";
-        if(m_colorCount < 0)
+        if (!m_togglePressed)
         {
-            m_colorCount = 0;
+            m_togglePressed = true;
         }
-
-        if (m_lastColor == m_countedColor && !(m_lastColor == matchedColor))
+        else
         {
-            m_colorCount++;
-        }
-        m_lastColor = matchedColor;
-
-        // stop after about 3 1/2 revolution (2 color counts per revolution)
-        if (m_colorCount >= 7)
-        {
-            this->Spin(false);
+            m_togglePressed = false;
         }
     }
-
-    //if (!(m_spinToColor == kBlack))
-    //{
-    //    // process spinning to specific color
-    //    if (m_spinToColor == matchedColor)
-    //    {
-    //        m_spinToColor = kBlack;
-    //        this->SetSpinWheelMotorSpeed(0);
-    //    }
-    //    else
-    //    {
-    //        this->SetSpinWheelMotorSpeed(m_spinSpeed * 0.5);
-    //    }
-    //}
-
-    //// when counting is disabled reset counter
-    //if (!m_countColors && m_colorCount >= 0)
-    //{
-    //    m_colorCount = -1;
-    //    m_lastColor = kBlack;
-    //}
-
-    frc::SmartDashboard::PutString(kDetectedColor, ColorName(matchedColor));
-    frc::SmartDashboard::PutNumber(kColorsCounted, m_colorCount);
-
-    m_debugEnable = frc::SmartDashboard::GetBoolean(kDebug, false);
-
-    if(m_debugEnable)
-    {
-        m_countColors = frc::SmartDashboard::GetBoolean(kCountColors, false);
-        m_countedColor = GetColorFromName(
-            frc::SmartDashboard::GetString(kColorToCount, ColorName(m_countedColor)));
-
-        m_spinSpeed = frc::SmartDashboard::GetNumber(kSpinSpeed, kSpinSpeedDefault);
-    }
-
-    // TODO: Why is this called twice?
-    // Once in SpinToColor()
-    // Again in UpdateColorSensorValues()
-    this->SetTargetColorFromGameData();
 }
