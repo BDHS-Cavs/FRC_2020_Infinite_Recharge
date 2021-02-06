@@ -5,22 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+// Cavalier Includes
 #include "Robot.h"
 
 void Robot::RobotInit() {
-   m_joystick.SetTwistChannel(kTwistAxis);
-   m_gyro.Calibrate();
+   m_colorWheel.OnRobotInit();
+   m_shooter.OnRobotInit();
+   m_joystick1.SetTwistChannel(kTwistAxis);
 }
 
 void Robot::AutonomousInit() {}
 
 void Robot::AutonomousPeriodic() {}
 
-void Robot::TeleopInit() {
-}
+void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-	m_drive.Periodic(m_joystick.GetY(), m_joystick.GetX(), m_joystick.GetTwist(), m_gyro.GetAngle());
+   // Joystick 1 = Drive, Joystick 2 = Non-Drive Controls
+   m_colorWheel.Periodic(m_joystick2.GetRawButton(7), m_joystick2.GetRawButton(8), m_joystick2.GetRawButtonPressed(9));
+	m_drive.Periodic(m_joystick1.GetY(), m_joystick1.GetX(), m_joystick1.GetTwist());
+   m_elevator.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(3));
+   m_intake.Periodic(m_joystick2.GetRawButton(1), m_joystick2.GetRawButton(3));
+   m_shooter.Periodic(m_joystick2.GetRawButton(5));
 }
 
 #ifndef RUNNING_FRC_TESTS

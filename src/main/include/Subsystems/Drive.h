@@ -12,12 +12,15 @@
 #include <frc/Spark.h>
 
 class Drive {
+
 private:
+  // Constants
   static constexpr int kFrontLeftChannel  = 2;
   static constexpr int kRearLeftChannel   = 0;
   static constexpr int kFrontRightChannel = 3;
   static constexpr int kRearRightChannel  = 1;
 
+  // Members
   frc::Spark m_leftFront{kFrontLeftChannel};
   frc::Spark m_leftRear{kRearLeftChannel};
   frc::Spark m_rightFront{kFrontRightChannel};
@@ -26,6 +29,6 @@ private:
                                  m_rightRear};
 public:
 
-	void InitDefaultCommand();
-	void Periodic(double ySpeed, double xSpeed, double zRotation, double gyroAngle);
+  // Functions
+	void Periodic(double ySpeed, double xSpeed, double zRotation);
 };
